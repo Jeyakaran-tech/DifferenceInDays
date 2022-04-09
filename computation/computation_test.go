@@ -10,10 +10,10 @@ import (
 var _ = ginkgo.Describe("Computation", func() {
 	ginkgo.When("Dates were passed", func() {
 		ginkgo.It("should tell us the number of days between the dates", func() {
-			date1 := types.NewDate(3, 1, 2000)
-			date2 := types.NewDate(5, 1, 2000)
+			date1 := types.NewDate(4, 7, 1984)
+			date2 := types.NewDate(25, 12, 1984)
 			differenceInDays := NumberOfDaysBetweenTheDates(date1, date2)
-			gomega.Expect(differenceInDays).To(gomega.BeEquivalentTo(2))
+			gomega.Expect(differenceInDays).To(gomega.BeEquivalentTo(174))
 		})
 	})
 
@@ -25,4 +25,17 @@ var _ = ginkgo.Describe("Computation", func() {
 		})
 	})
 
+	ginkgo.When("Valid date string is passed", func() {
+		ginkgo.It("should return true", func() {
+			validDate := IsValidDate("2/6/1983")
+			gomega.Expect(validDate).To(gomega.BeEquivalentTo(true))
+		})
+	})
+
+	ginkgo.When("Valid date string is passed", func() {
+		ginkgo.It("should return true", func() {
+			validDate := IsValidDate("2/6/3002")
+			gomega.Expect(validDate).To(gomega.BeEquivalentTo(false))
+		})
+	})
 })
