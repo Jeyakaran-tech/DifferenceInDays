@@ -25,7 +25,7 @@ loop:
 		secondDate, _, _ := reader.ReadLine()
 		secondDateString := string(secondDate)
 		ok2 := computation.IsValidDate((string(secondDate)))
-		fmt.Println(ok1, ok2)
+
 		if ok1 && ok2 {
 			integerArrayFirstDate := computation.SplitString(firstDateString, "/")
 			integerArraySecondDate := computation.SplitString(secondDateString, "/")
