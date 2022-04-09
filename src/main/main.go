@@ -11,11 +11,11 @@ import (
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Enter First Date: (dd/MM/YYYY)")
+	fmt.Print("Enter First Date(dd/MM/YYYY): ")
 	firstDate, _, _ := reader.ReadLine()
 	integerArrayFirstDate := computation.SplitString(string(firstDate), "/")
 
-	fmt.Print("Enter Second Date: (dd/MM/YYYY)")
+	fmt.Print("Enter Second Date(dd/MM/YYYY): ")
 	secondDate, _, _ := reader.ReadLine()
 	integerArraySecondDate := computation.SplitString(string(secondDate), "/")
 
