@@ -8,7 +8,7 @@ func SplitString(dateString string, symbol string) []int {
 	temp := ""
 	i := 0
 	for _, character := range dateString {
-		if character == '/' {
+		if character == SeperatorRune {
 			stringArray[i] = temp
 			i++
 			temp = ""

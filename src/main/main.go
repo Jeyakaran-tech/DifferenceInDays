@@ -27,8 +27,8 @@ loop:
 		ok2 := computation.IsValidDate((string(secondDate)))
 
 		if ok1 && ok2 {
-			integerArrayFirstDate := computation.SplitString(firstDateString, "/")
-			integerArraySecondDate := computation.SplitString(secondDateString, "/")
+			integerArrayFirstDate := computation.SplitString(firstDateString, computation.SeperatorString)
+			integerArraySecondDate := computation.SplitString(secondDateString, computation.SeperatorString)
 
 			AfterDate := types.NewDate(integerArraySecondDate[0], integerArraySecondDate[1], integerArraySecondDate[2])
 			beforeDate := types.NewDate(integerArrayFirstDate[0], integerArrayFirstDate[1], integerArrayFirstDate[2])
@@ -37,6 +37,8 @@ loop:
 
 			if diff < 0 {
 				fmt.Println((diff*-1)-1, "days")
+			} else if diff == 0 {
+				fmt.Println("Both dates provided are same")
 			} else {
 				fmt.Println(diff-1, "days")
 			}
