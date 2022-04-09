@@ -2,7 +2,6 @@ package computation
 
 import (
 	"regexp"
-	"strconv"
 
 	"github.com/Jeyakaran-tech/DifferenceInDays/types"
 )
@@ -20,7 +19,6 @@ func NumberOfDaysBetweenTheDates(d1 *types.Date, d2 *types.Date) int {
 	}
 	n2 += countLeapYears(d2)
 	return (n2 - n1)
-
 }
 
 func countLeapYears(date *types.Date) int {
@@ -33,17 +31,6 @@ func countLeapYears(date *types.Date) int {
 
 func IsValidDate(date string) bool {
 
-	yearString := date[len(date)-4:]
-
-	year, err := strconv.Atoi(yearString)
-	if err != nil {
-		panic(err)
-	}
-
-	re := regexp.MustCompile(`^[0-3]?[0-9]\/[0-3]?[0-9]\/(?:[0-9]{4})$`)
-	if re.MatchString(date) && year > 1900 && year < 2999 {
-		return true
-	}
-	return false
-
+	re := regexp.MustCompile(`^[0-3]?[0-9]\/[0-3]?[0-9]\/(?:(?:19|2[0-9])[0-9]{2})$`)
+	return re.MatchString(date)
 }
