@@ -17,36 +17,49 @@ func main() {
 loop:
 	for {
 		fmt.Print("Enter First Date(dd/MM/YYYY): ")
+
+		//getting the first date
 		firstDate, _, _ := reader.ReadLine()
 		firstDateString := string(firstDate)
+
+		//validation for first date happens
 		ok1 := computation.IsValidDate((string(firstDate)))
 
 		fmt.Print("Enter Second Date(dd/MM/YYYY): ")
+		//getting the second date
 		secondDate, _, _ := reader.ReadLine()
 		secondDateString := string(secondDate)
+
+		//validation for second date happens
 		ok2 := computation.IsValidDate((string(secondDate)))
 
-		if ok1 && ok2 {
-			integerArrayFirstDate := computation.SplitString(firstDateString, computation.SeperatorString)
-			integerArraySecondDate := computation.SplitString(secondDateString, computation.SeperatorString)
+		if ok1 && ok2 { //If the validation passes
+			//Two strings gets splitted into three seperate integer parts (date, month, year)
+			integerArrayFirstDate := computation.SplitString(firstDateString)
+			integerArraySecondDate := computation.SplitString(secondDateString)
 
+			//declaring the date, month and year into struct
 			AfterDate := types.NewDate(integerArraySecondDate[0], integerArraySecondDate[1], integerArraySecondDate[2])
 			beforeDate := types.NewDate(integerArrayFirstDate[0], integerArrayFirstDate[1], integerArrayFirstDate[2])
 
+			//we get the difference here
 			diff := computation.NumberOfDaysBetweenTheDates(beforeDate, AfterDate)
 
+			//Always the result is subtracted by 1, because we should not take the starting day into account
 			if diff < 0 {
-				fmt.Println((diff*-1)-1, "days")
+				fmt.Println((diff*-1)-1, "days") //If the result is negative, we will multiply by -1
 			} else if diff == 0 {
-				fmt.Println("Both dates provided are same")
+				fmt.Println("Both dates provided are same") //If the result is 0, then both the dates are same
 			} else {
 				fmt.Println(diff-1, "days")
 			}
 		} else {
+			// This message gets printed if any of the the dates were invalid
 			fmt.Println("The dates were of invalid format. Check the format once")
 			goto loop
 		}
 
+		//This block helps to run the program till the user press "2"
 		fmt.Println("1. Press 1 to continue\n2. Press 2 to exit")
 		fmt.Scan(&option)
 		switch option {

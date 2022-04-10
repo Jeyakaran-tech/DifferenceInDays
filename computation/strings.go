@@ -2,12 +2,17 @@ package computation
 
 import "strconv"
 
-func SplitString(dateString string, symbol string) []int {
+//SplitString - will split the string
+func SplitString(dateString string) []int {
 
 	var stringArray [3]string
 	temp := ""
 	i := 0
+
+	//going through each character in a string
 	for _, character := range dateString {
+
+		//if block seperates the seperator and string
 		if character == SeperatorRune {
 			stringArray[i] = temp
 			i++
@@ -18,6 +23,7 @@ func SplitString(dateString string, symbol string) []int {
 	}
 	stringArray[2] = temp
 
+	//converts the strings into integer and returns it
 	integerArray := make([]int, 0, 3)
 	for _, str := range stringArray {
 		i, err := strconv.Atoi(str)
