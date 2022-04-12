@@ -38,4 +38,16 @@ var _ = ginkgo.Describe("Computation", func() {
 			gomega.Expect(validDate).To(gomega.BeEquivalentTo(false))
 		})
 	})
+
+	ginkgo.When("date parts were passed into findDifferenceUsingTimePackage()", func() {
+		ginkgo.It("should return difference in days", func() {
+			t1 := findDifferenceUsingTimePackage(1929, 1, 3)
+			t2 := findDifferenceUsingTimePackage(1923, 8, 3)
+			days := t2.Sub(t1).Hours() / 24
+			if days < 0 {
+				days = (days * -1) - 1
+			}
+			gomega.Expect(days).To(gomega.BeEquivalentTo(1979))
+		})
+	})
 })

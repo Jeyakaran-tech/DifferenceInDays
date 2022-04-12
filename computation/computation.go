@@ -2,6 +2,7 @@ package computation
 
 import (
 	"regexp"
+	"time"
 
 	"github.com/Jeyakaran-tech/DifferenceInDays/types"
 )
@@ -24,13 +25,14 @@ func NumberOfDaysBetweenTheDates(d1 *types.Date, d2 *types.Date) int {
 	n2 := d2.Year*365 + d2.Day
 
 	//The days of all the previous months have been added here
-
 	for i := 0; i < d2.Month-1; i++ {
 		n2 += monthDays[i]
 	}
 
 	//Takes all the leap years within the year into account
 	n2 += countLeapYears(d2)
+
+	//difference between the total days will give us the difference
 	return (n2 - n1)
 }
 
@@ -49,4 +51,8 @@ func IsValidDate(date string) bool {
 
 	re := regexp.MustCompile(`^[0-3]?[0-9]\/[0-3]?[0-9]\/(?:(?:19|2[0-9])[0-9]{2})$`)
 	return re.MatchString(date)
+}
+
+func findDifferenceUsingTimePackage(year, month, day int) time.Time {
+	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
 }
