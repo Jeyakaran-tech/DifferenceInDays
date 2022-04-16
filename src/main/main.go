@@ -14,7 +14,7 @@ var option int
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 
-loop:
+outerloop:
 	for {
 		fmt.Print("Enter First Date(dd/MM/YYYY): ")
 
@@ -25,38 +25,46 @@ loop:
 		//validation for first date happens
 		ok1 := computation.IsValidDate((string(firstDate)))
 
-		fmt.Print("Enter Second Date(dd/MM/YYYY): ")
-		//getting the second date
-		secondDate, _, _ := reader.ReadLine()
-		secondDateString := string(secondDate)
+	Innerloop:
+		if ok1 {
+			fmt.Print("Enter Second Date(dd/MM/YYYY): ")
+			//getting the second date
+			secondDate, _, _ := reader.ReadLine()
+			secondDateString := string(secondDate)
 
-		//validation for second date happens
-		ok2 := computation.IsValidDate((string(secondDate)))
+			//validation for second date happens
+			ok2 := computation.IsValidDate((string(secondDate)))
 
-		if ok1 && ok2 { //If the validation passes
-			//Two strings gets splitted into three seperate integer parts (date, month, year)
-			integerArrayFirstDate := computation.SplitString(firstDateString)
-			integerArraySecondDate := computation.SplitString(secondDateString)
+			if ok2 { //If the validation passes
+				//Two strings gets splitted into three seperate integer parts (date, month, year)
+				integerArrayFirstDate := computation.SplitString(firstDateString)
+				integerArraySecondDate := computation.SplitString(secondDateString)
 
-			//declaring the date, month and year into struct
-			AfterDate := types.NewDate(integerArraySecondDate[0], integerArraySecondDate[1], integerArraySecondDate[2])
-			beforeDate := types.NewDate(integerArrayFirstDate[0], integerArrayFirstDate[1], integerArrayFirstDate[2])
+				//declaring the date, month and year into struct
+				date1 := types.NewDate(integerArrayFirstDate[0], integerArrayFirstDate[1], integerArrayFirstDate[2])
+				date2 := types.NewDate(integerArraySecondDate[0], integerArraySecondDate[1], integerArraySecondDate[2])
 
-			//we get the difference here
-			diff := computation.NumberOfDaysBetweenTheDates(beforeDate, AfterDate)
+				//we get the difference here
+				diff := computation.NumberOfDaysBetweenTheDates(date1, date2)
 
-			//Always the result is subtracted by 1, because we should not take the starting day into account
-			if diff < 0 {
-				fmt.Println((diff*-1)-1, "days") //If the result is negative, we will multiply by -1
-			} else if diff == 0 {
-				fmt.Println("Both dates provided are same") //If the result is 0, then both the dates are same
+				//Always the result is subtracted by 1, because we should not take the starting day into account
+				if diff < 0 {
+					fmt.Println((diff*-1)-1, "days") //If the result is negative, we will multiply by -1
+				} else if diff == 0 {
+					fmt.Println("0 days (Both dates provided are same)") //If the result is 0, then both the dates are same
+				} else {
+					fmt.Println(diff-1, "days")
+				}
 			} else {
-				fmt.Println(diff-1, "days")
+				// This message gets printed if any of the the dates were invalid
+				fmt.Println("The dates were of invalid format. Check the format once")
+				goto Innerloop
 			}
+
 		} else {
 			// This message gets printed if any of the the dates were invalid
 			fmt.Println("The dates were of invalid format. Check the format once")
-			goto loop
+			goto outerloop
 		}
 
 		//This block helps to run the program till the user press "2"
@@ -64,9 +72,9 @@ loop:
 		fmt.Scan(&option)
 		switch option {
 		case 1:
-			goto loop
+			goto outerloop
 		default:
-			break loop
+			break outerloop
 		}
 
 	}
